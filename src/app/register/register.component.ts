@@ -17,23 +17,28 @@ export class RegisterComponent implements OnInit {
     codeApogee: null,
     branchId: 0
   };
+
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  branches = [];
+  branches: any[] = [];
 
   constructor(private authService: AuthService, private branchService: BranchService) { }
 
   ngOnInit(): void {
     this.branchService.getAllBranches().subscribe(data => {
-      console.log(data);
-      this.branches.push();
+      data.forEach((branch: any) => {
+        this.branches.push({
+          id: branch.id,
+          name: branch.name
+        });
+      })
     })
   }
 
   onSubmit(): void {
     const { firstName, lastName, email, password, codeApogee, branchId } = this.form;
-
+    console.log(this.form);
     this.authService.registerStudent(firstName, lastName, email, password, codeApogee, branchId).subscribe(
       data => {
         console.log(data);
@@ -45,5 +50,9 @@ export class RegisterComponent implements OnInit {
         this.isSignUpFailed = true;
       }
     );
+  }
+
+  branchChanged(event: any) {
+    this.form.branchId = event.target!.value;
   }
 }

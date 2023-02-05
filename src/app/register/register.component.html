@@ -13,43 +13,74 @@
       novalidate
     >
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="codeApogee">Code Apogee</label>
         <input
           type="text"
           class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
+          name="codeApogee"
+          [(ngModel)]="form.codeApogee"
+          required
+          minlength="8"
+          #codeApogee="ngModel"
+        />
+        <div class="alert-danger" *ngIf="codeApogee.errors && f.submitted">
+          <div *ngIf="codeApogee.errors.required">Code Apogee is required</div>
+          <div *ngIf="codeApogee.errors.minlength">
+            Code Apogee must be at least 8 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="first-name"
+          [(ngModel)]="form.firstName"
           required
           minlength="3"
           maxlength="20"
-          #username="ngModel"
+          #firstName="ngModel"
         />
-        <div class="alert-danger" *ngIf="username.errors && f.submitted">
-          <div *ngIf="username.errors.required">Username is required</div>
-          <div *ngIf="username.errors.minlength">
-            Username must be at least 3 characters
+        <div class="alert-danger" *ngIf="firstName.errors && f.submitted">
+          <div *ngIf="firstName.errors.required">Username is required</div>
+          <div *ngIf="firstName.errors.minlength">
+            first Name must be at least 3 characters
           </div>
-          <div *ngIf="username.errors.maxlength">
-            Username must be at most 20 characters
+          <div *ngIf="firstName.errors.maxlength">
+            first Name must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lastName"
+          [(ngModel)]="form.lastName"
+          required
+          #lastName="ngModel"
+        />
+        <div class="alert-danger" *ngIf="lastName.errors && f.submitted">
+          <div *ngIf="lastName.errors.required">Email is required</div>
+          <div *ngIf="lastName.errors.email">
+            Email must be a valid email address
           </div>
         </div>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input
-          type="email"
+          type="text"
           class="form-control"
           name="email"
           [(ngModel)]="form.email"
           required
-          email
           #email="ngModel"
         />
         <div class="alert-danger" *ngIf="email.errors && f.submitted">
           <div *ngIf="email.errors.required">Email is required</div>
-          <div *ngIf="email.errors.email">
-            Email must be a valid email address
-          </div>
         </div>
       </div>
       <div class="form-group">
@@ -70,6 +101,7 @@
           </div>
         </div>
       </div>
+
       <div class="form-group">
         <button class="btn btn-primary btn-block">Sign Up</button>
       </div>

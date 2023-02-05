@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import {BranchService} from "../_services/branch.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-register',
@@ -18,10 +20,15 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
+  branches = [];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private branchService: BranchService) { }
 
   ngOnInit(): void {
+    this.branchService.getAllBranches().subscribe(data => {
+      console.log(data);
+      this.branches.push();
+    })
   }
 
   onSubmit(): void {

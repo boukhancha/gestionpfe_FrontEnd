@@ -16,6 +16,7 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { RegisterSupervisorComponent } from './register-supervisor/register-supervisor.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SubjectCardComponent } from './subject-card/subject-card.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
-    RegisterSupervisorComponent
+    RegisterSupervisorComponent,
+    SubjectCardComponent
   ],
   imports: [
     BrowserModule,

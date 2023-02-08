@@ -12,11 +12,8 @@ import {Branch} from "../models/branch.model";
 export class HomeComponent implements OnInit {
   content?: string;
   branches: Branch[] = [];
-  CurrentBranche: Branch = {};
 
   title = '';
-
-  currentIndex = -1;
 
   page = 1;
   count = 0;
@@ -28,7 +25,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.retrieveAllBranches();
+    this.retrieveBranches();
   }
 
   getRequestParams(searchSubject: string, page: number, pageSize: number): any {
@@ -74,7 +71,6 @@ export class HomeComponent implements OnInit {
             console.log(error);
           });
     }
-
   }
 
   retrieveAllBranches(): void {
@@ -108,10 +104,6 @@ export class HomeComponent implements OnInit {
     this.retrieveBranches();
   }
 
-  setActiveTutorial(branch: Branch, index: number): void {
-    this.CurrentBranche = branch;
-    this.currentIndex = index;
-  }
 
   groupArray<T>(data: Array<T>, n: number):
     Array<T[]> {

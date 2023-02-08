@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 import {BranchService} from "../_services/branch.service";
 import {SubjectService} from "../_services/subject.service";
-import {Branch} from "../models/branch.model";
+import {SupervisorService} from "../_services/supervisor.service";
+import {Subject} from "../models/subject.model";
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import {Branch} from "../models/branch.model";
 })
 export class HomeComponent implements OnInit {
   content?: string;
-  branches: Branch[] = [];
+  subjects: Subject[] = [];
 
   title = '';
 
@@ -21,11 +22,14 @@ export class HomeComponent implements OnInit {
   pageSizes = [2, 4, 6, 8];
 
 
-  constructor(private authService: AuthService, private branchService: BranchService, private subjectService: SubjectService) {
+  constructor(private authService: AuthService,
+              private branchService: BranchService,
+              private subjectService: SubjectService,
+              private supervisorService: SupervisorService) {
   }
 
   ngOnInit(): void {
-    this.retrieveBranches();
+    this.retrieveSubject();
   }
 
   getRequestParams(searchSubject: string, page: number, pageSize: number): any {
@@ -46,13 +50,21 @@ export class HomeComponent implements OnInit {
     return params;
   }
 
-  retrieveBranches(): void {
+  retrieveSubject(): void {
+    this.subjects = [];
     const params = this.getRequestParams(this.title, this.page, this.pageSize);
     if (!params['subject']) {
       this.subjectService.getAllSubjects()
         .subscribe(
           response => {
-            this.branches = response;
+            response.forEach((subject: any) => {
+              this.supervisorService.getSupervisorById(subject.supervisor).subscribe(response => {
+                subject.supervisorObject = response;
+                this.subjects.push(subject);
+              }, error => {
+                console.log(error);
+              });
+            });
             this.count = response.length;
             console.log(response);
           },
@@ -63,7 +75,15 @@ export class HomeComponent implements OnInit {
       this.subjectService.getSubjectsByKeyword(params['subject'])
         .subscribe(
           response => {
-            this.branches = response;
+            this.subjects = response;
+            this.subjects.forEach((subject) => {
+              this.supervisorService.getSupervisorById(subject.supervisor).subscribe(response => {
+                subject.supervisorObject = response;
+                console.log(subject.supervisorObject);
+              }, error => {
+                console.log(error);
+              });
+            });
             this.count = response.length;
             console.log(response);
           },
@@ -73,51 +93,21 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  retrieveAllBranches(): void {
-    this.subjectService.getAllSubjects()
-      .subscribe(
-        response => {
-          this.branches = response;
-          this.count = response.length;
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-
   handlePageChange(event: number): void {
     this.page = event;
-    this.retrieveBranches();
+    this.retrieveSubject();
   }
 
   handlePageSizeChange(event: any):
     void {
     this.pageSize = event.target.value;
     this.page = 1;
-    this.retrieveBranches();
+    this.retrieveSubject();
   }
 
   searchSubject(): void {
     this.page = 1;
-    this.retrieveBranches();
-  }
-
-
-  groupArray<T>(data: Array<T>, n: number):
-    Array<T[]> {
-    let group = new Array<T[]>();
-
-    for (let i = 0, j = 0; i < data.length; i++
-    ) {
-      if (i >= n && i % n === 0)
-        j++;
-      group[j] = group[j] || [];
-      group[j].push(data[i])
-    }
-
-    return group;
+    this.retrieveSubject();
   }
 
   setTitle(searchInput: HTMLInputElement) {

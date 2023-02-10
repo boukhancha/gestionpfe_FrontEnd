@@ -1,8 +1,15 @@
 <div class="card">
   <div class="card-body p-2">
-    <h1>{{ subject.subject }}</h1>
-    <p>{{supervisor.firstName}}</p>
-    <h2>{{ subject.description }}</h2>
-    <h3>{{ subject.groupNumber }}</h3>
+    <h1 class="font-italic">{{ subject.subject }}</h1>
+    <div class="image_text">
+      <img class="icon_avatar"
+           src="https://ui-avatars.com/api/?name={{supervisor.firstName}}+{{supervisor.lastName}}&background=random"
+           alt="Avatar">
+      <p class="card-text"><small class="text-muted"><span
+        style="">Created by : Pr.{{supervisor.firstName }} {{ supervisor.lastName}}</span></small>
+      </p>
+    </div>
+    <p class="jasmine-description">{{ subject.description }}</p>
+    <p class="jasmine-description">Number of groupes : {{ subject.groupNumber }}</p>
   </div>
 </div>

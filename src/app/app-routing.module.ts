@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: 'subjectCard', component: SubjectCardComponent },
+    { path: 'subjectCard/:id', component: SubjectCardComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

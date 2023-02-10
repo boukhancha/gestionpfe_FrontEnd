@@ -7,6 +7,7 @@ import {UniversityService} from "../_services/university.service";
 import {EstablishmentService} from "../_services/establishment.service";
 import {DepartmentService} from "../_services/department.service";
 import {Subject} from "../models/subject.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -40,7 +41,8 @@ export class HomeComponent implements OnInit {
               private supervisorService: SupervisorService,
               private universityService: UniversityService,
               private establishmentService: EstablishmentService,
-              private departmentService: DepartmentService) {
+              private departmentService: DepartmentService,
+              private router : Router) {
   }
 
   ngOnInit(): void {
@@ -113,19 +115,28 @@ export class HomeComponent implements OnInit {
 
   universityChanged(event: any) {
     this.filter.selectedUniversity = event.target.value;
-    this.establishmentService.getEstablishmentsByUniversity(this.filter.selectedUniversity).subscribe(response => {
-      this.establishments = response;
-    });
-    this.page = 1;
-    this.retrieveSubject();
+    if(!this.filter.selectedUniversity) {
+      this.establishments = [];
+      this.departments = [];
+    } else {
+      this.establishmentService.getEstablishmentsByUniversity(this.filter.selectedUniversity).subscribe(response => {
+        this.establishments = response;
+      });
+      this.page = 1;
+      this.retrieveSubject();
+    }
   }
 
   establishmentChanged(event: any) {
     this.filter.selectedEstablishment = event.target.value;
-    this.departmentService.getDepartmentByEstablishment(this.filter.selectedEstablishment).subscribe(response => {
-      this.departments = response;
-    });
-    this.retrieveSubject();
+    if(!this.filter.selectedEstablishment) {
+      this.departments = [];
+    } else {
+      this.departmentService.getDepartmentByEstablishment(this.filter.selectedEstablishment).subscribe(response => {
+        this.departments = response;
+      });
+      this.retrieveSubject();
+    }
   }
 
   departmentChanged(event: any) {

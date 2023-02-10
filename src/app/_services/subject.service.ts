@@ -10,18 +10,19 @@ const SUBJECT_API_URL = 'http://localhost:8090/api/v1/pfe-subject';
 })
 export class SubjectService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getSubjectById(subjectId: number): Observable<any> {
-    return this.http.get(SUBJECT_API_URL + "/" + subjectId, { responseType: 'json' });
+  getSubjectById(subjectId: number | undefined): Observable<any> {
+    return this.http.get(SUBJECT_API_URL + "/pfe-subject/" + subjectId, { responseType: 'json' });
   }
 
   getSubjectsByKeyword(keyword: string): Observable<any> {
-    return this.http.get(SUBJECT_API_URL + "/search?keyword=" + keyword, { responseType: 'json' });
+    return this.http.get(SUBJECT_API_URL + "/search?keyword=" + keyword, {responseType: 'json'});
   }
 
-  getAllSubjects() : Observable<any>{
-    return this.http.get(SUBJECT_API_URL, { responseType: 'json' });
+  getAllSubjects(): Observable<any> {
+    return this.http.get(SUBJECT_API_URL, {responseType: 'json'});
   }
 
   getAllSubjectsByUniversity(universityId: number) : Observable<any>{
@@ -47,4 +48,5 @@ export class SubjectService {
   getAllSubjectsByDepartmentAndKeyword(departmentId: number, keyword: string) {
     return this.http.get(SUBJECT_API_URL + "/department/" + departmentId + "/search?keyword=" + keyword, { responseType: 'json' });
   }
+
 }

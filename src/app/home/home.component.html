@@ -3,6 +3,8 @@
     type="text"
     class="form-control"
     placeholder="Search by title"
+    [(ngModel)]="this.keyword"
+    (ngModelChange)="this.retrieveSubject()"
     #searchInput
   />
   <div class="input-group-append">
@@ -17,15 +19,15 @@
 </div>
 <div class="d-flex">
   <select class="custom-select" (change)="universityChanged($event)">
-    <option [value]="">Select University</option>
+    <option value="">Select University</option>
     <option [value]="university.id" *ngFor="let university of universities">{{university.name}}</option>
   </select>
   <select class="custom-select" (change)="establishmentChanged($event)">
-    <option [value]="">Select Establishment</option>
+    <option value="">Select Establishment</option>
     <option [value]="establishment.id" *ngFor="let establishment of establishments">{{establishment.name}}</option>
   </select>
   <select class="custom-select" (change)="departmentChanged($event)">
-    <option [value]="">Select Department</option>
+    <option value="">Select Department</option>
     <option [value]="department.id" *ngFor="let department of departments">{{department.name}}</option>
   </select>
 </div>
@@ -50,8 +52,8 @@
 </div>
 <div>
   <div>
-    <a class="d-flex flex-wrap mt-5" href="/subjectCard" style="  color: inherit;text-decoration: inherit;" routerLink="/subjectCard"  >
-      <div class="card col-4"  *ngFor="
+    <div class="d-flex flex-wrap mt-5">
+    <div class="card col-4" *ngFor="
           let subject of subjects | paginate : {
                   itemsPerPage: pageSize,
                   currentPage: page,
@@ -59,16 +61,23 @@
                 };
           let i = index
         ">
+      <a  href="/subjectCard/{{subject.id}}" style="  color: inherit;text-decoration: inherit;"
+         routerLink="/subjectCard/{{subject.id}}">
         <div class="card-body">
           <h5 class="card-title">{{subject.subject}}</h5>
           <p class="card-text">{{subject.description}}</p>
           <div class="image_text">
-          <img class="icon_avatar" src="https://ui-avatars.com/api/?name={{subject.supervisorObject.firstName}}+{{subject.supervisorObject.lastName}}&background=random" alt="Avatar">
-          <p class="card-text"><small class="text-muted"><span style="">Pr.{{subject.supervisorObject.firstName }} {{ subject.supervisorObject.lastName}}</span></small></p>
+            <img class="icon_avatar"
+                 src="https://ui-avatars.com/api/?name={{subject.supervisorObject.firstName}}+{{subject.supervisorObject.lastName}}&background=random"
+                 alt="Avatar">
+            <p class="card-text"><small class="text-muted"><span
+              style="">Pr.{{subject.supervisorObject.firstName }} {{ subject.supervisorObject.lastName}}</span></small>
+            </p>
           </div>
-          <p class="card-text"><strong>Number of groupes  : {{subject.groupNumber}}</strong></p>
+          <p class="card-text"><strong>Number of groupes : {{subject.groupNumber}}</strong></p>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
+    </div>
   </div>
 </div>

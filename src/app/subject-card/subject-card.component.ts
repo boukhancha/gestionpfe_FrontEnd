@@ -31,7 +31,9 @@ export class SubjectCardComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         this.subject = data;
-        this.supervisor.id = data.supervisor;
+        this.supervisorService.getSupervisorById(data.supervisor).subscribe(data =>{
+          this.supervisor = data;
+        });
         console.log(this.supervisor.id)
       }, error => console.log(error));
 

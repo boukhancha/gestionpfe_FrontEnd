@@ -13,43 +13,56 @@
       novalidate
     >
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="firstName">First Name</label>
         <input
           type="text"
           class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
+          name="first-name"
+          [(ngModel)]="form.firstName"
           required
           minlength="3"
           maxlength="20"
-          #username="ngModel"
+          #firstName="ngModel"
         />
-        <div class="alert-danger" *ngIf="username.errors && f.submitted">
-          <div *ngIf="username.errors.required">Username is required</div>
-          <div *ngIf="username.errors.minlength">
-            Username must be at least 3 characters
+        <div class="alert-danger" *ngIf="firstName.errors && f.submitted">
+          <div *ngIf="firstName.errors.required">Username is required</div>
+          <div *ngIf="firstName.errors.minlength">
+            first Name must be at least 3 characters
           </div>
-          <div *ngIf="username.errors.maxlength">
-            Username must be at most 20 characters
+          <div *ngIf="firstName.errors.maxlength">
+            first Name must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lastName"
+          [(ngModel)]="form.lastName"
+          required
+          #lastName="ngModel"
+        />
+        <div class="alert-danger" *ngIf="lastName.errors && f.submitted">
+          <div *ngIf="lastName.errors.required">Email is required</div>
+          <div *ngIf="lastName.errors.email">
+            Email must be a valid email address
           </div>
         </div>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input
-          type="email"
+          type="text"
           class="form-control"
           name="email"
           [(ngModel)]="form.email"
           required
-          email
           #email="ngModel"
         />
         <div class="alert-danger" *ngIf="email.errors && f.submitted">
           <div *ngIf="email.errors.required">Email is required</div>
-          <div *ngIf="email.errors.email">
-            Email must be a valid email address
-          </div>
         </div>
       </div>
       <div class="form-group">
@@ -70,6 +83,29 @@
           </div>
         </div>
       </div>
+
+      <div class="form-group dropdown">
+        <label for="University">University</label>
+        <select class="custom-select" (change)="universityChanged($event)">
+          <option value="">Select University</option>
+          <option [value]="university.id" *ngFor="let university of universities">{{university.name}}</option>
+        </select>
+      </div>
+      <div class="form-group dropdown">
+        <label for="Establishment">Establishment</label>
+        <select class="custom-select" (change)="establishmentChanged($event)">
+          <option value="">Select Establishment</option>
+          <option [value]="establishment.id" *ngFor="let establishment of establishments">{{establishment.name}}</option>
+        </select>
+      </div>
+      <div class="form-group dropdown">
+        <label for="Department">Department</label>
+        <select class="custom-select" (change)="departmentChanged($event)">
+          <option value="">Select Department</option>
+          <option [value]="department.id" *ngFor="let department of departments">{{department.name}}</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <button class="btn btn-primary btn-block">Sign Up</button>
       </div>
@@ -77,6 +113,9 @@
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
         Signup failed!<br />{{ errorMessage }}
       </div>
+
+
+
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">

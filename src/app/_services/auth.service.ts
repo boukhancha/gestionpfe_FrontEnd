@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 const AUTH_API = 'http://localhost:8090/api/login';
 const REGISTER_STUDENT_API = 'http://localhost:8090/api/v1/registration/student';
+const REGISTER_SUPERVISOR_API = 'http://localhost:8090/api/v1/registration/supervisor';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -29,17 +30,15 @@ export class AuthService {
     }, httpOptionsLogin);
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API , {
-      username,
-      email,
-      password
-    }, httpOptions);
-  }
-
   registerStudent(firstName: string, lastName: string, email: string, password: string, codeApogee: string, branchId: number): Observable<any> {
     return this.http.post(REGISTER_STUDENT_API , {
       firstName, lastName, email, password, codeApogee, branchId
+    }, httpOptions);
+  }
+
+  registerSupervisor(firstName: any, lastName: any, email: any, password: any, departmentId: any) {
+    return this.http.post(REGISTER_SUPERVISOR_API , {
+      firstName, lastName, email, password, departmentId
     }, httpOptions);
   }
 }

@@ -12,11 +12,39 @@ export class SubjectService {
 
   constructor(private http: HttpClient) { }
 
+  getSubjectById(subjectId: number): Observable<any> {
+    return this.http.get(SUBJECT_API_URL + "/" + subjectId, { responseType: 'json' });
+  }
+
   getSubjectsByKeyword(keyword: string): Observable<any> {
     return this.http.get(SUBJECT_API_URL + "/search?keyword=" + keyword, { responseType: 'json' });
   }
 
   getAllSubjects() : Observable<any>{
     return this.http.get(SUBJECT_API_URL, { responseType: 'json' });
+  }
+
+  getAllSubjectsByUniversity(universityId: number) : Observable<any>{
+    return this.http.get(SUBJECT_API_URL + "/university/" + universityId, { responseType: 'json' });
+  }
+
+  getAllSubjectsByUniversityAndKeyword(universityId: number, keyword: string) : Observable<any>{
+    return this.http.get(SUBJECT_API_URL + "/university/" + universityId + "/search?keyword=" + keyword, { responseType: 'json' });
+  }
+
+  getAllSubjectsByEstablishment(establishmentId: number) {
+    return this.http.get(SUBJECT_API_URL + "/establishment/" + establishmentId, { responseType: 'json' });
+  }
+
+  getAllSubjectsByEstablishmentAndKeyword(establishmentId: number, keyword: string) {
+    return this.http.get(SUBJECT_API_URL + "/establishment/" + establishmentId + "/search?keyword=" + keyword, { responseType: 'json' });
+  }
+
+  getAllSubjectsByDepartment(departmentId: number) {
+    return this.http.get(SUBJECT_API_URL + "/department/" + departmentId, { responseType: 'json' });
+  }
+
+  getAllSubjectsByDepartmentAndKeyword(departmentId: number, keyword: string) {
+    return this.http.get(SUBJECT_API_URL + "/department/" + departmentId + "/search?keyword=" + keyword, { responseType: 'json' });
   }
 }

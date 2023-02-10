@@ -9,11 +9,25 @@
     <button
       class="btn btn-outline-secondary"
       type="button"
-      (click)="setTitle(searchInput)"
+      (click)="setKeyword(searchInput)"
     >
       Search
     </button>
   </div>
+</div>
+<div class="d-flex">
+  <select class="custom-select" (change)="universityChanged($event)">
+    <option [value]="">Select University</option>
+    <option [value]="university.id" *ngFor="let university of universities">{{university.name}}</option>
+  </select>
+  <select class="custom-select" (change)="establishmentChanged($event)">
+    <option [value]="">Select Establishment</option>
+    <option [value]="establishment.id" *ngFor="let establishment of establishments">{{establishment.name}}</option>
+  </select>
+  <select class="custom-select" (change)="departmentChanged($event)">
+    <option [value]="">Select Department</option>
+    <option [value]="department.id" *ngFor="let department of departments">{{department.name}}</option>
+  </select>
 </div>
 
 <h4>Subject List</h4>

@@ -1,3 +1,5 @@
+import {Student} from "./student.model";
+
 export class Group {
   id?: number;
   students?: Array<number>;
@@ -5,4 +7,5 @@ export class Group {
   studentGroupState?: string;
   driveUrl?: string;
   isDriveUrlPublished?: boolean;
+  studentsObjects?: Array<Student>;
 }

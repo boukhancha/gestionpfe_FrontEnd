@@ -5,8 +5,11 @@ import {SubjectService} from "../_services/subject.service";
 import {SupervisorService} from "../_services/supervisor.service";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {GroupService} from "../_services/group.service";
+import {StudentService} from "../_services/student.service";
 import {Supervisor} from "../models/supervisor.model";
 import {Group} from "../models/group.model";
+import {Student} from "../models/student.model";
+
 
 @Component({
   selector: 'app-subject-card',
@@ -19,47 +22,43 @@ export class SubjectCardComponent implements OnInit {
 
   supervisor = new Supervisor();
 
+  students : []= [];
+
+
   groups: Group[] = [];
+
 
   constructor(private route: ActivatedRoute,
               private subjectService: SubjectService,
               private supervisorService: SupervisorService,
               private groupService: GroupService,
-              private tokenStorageService: TokenStorageService) {
-  }
+              private tokenStorageService: TokenStorageService,
+              private studentService : StudentService) { }
 
   ngOnInit(): void {
     this.subject = new Subject();
     this.supervisor = new Supervisor();
+    this.students = []
 
     this.subject.id = this.route.snapshot.params['id'];
 
     this.subjectService.getSubjectById(this.subject.id)
       .subscribe(data => {
-        console.log(data)
         this.subject = data;
         this.supervisorService.getSupervisorById(data.supervisor).subscribe(data => {
           this.supervisor = data;
         });
-        this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
-          this.groups = groups;
-          console.log(this.groups)
-        });
+        this.groups = this.getAllSubjectsWithStudents();
       }, error => console.log(error));
   }
 
   joinGroup(groupId: number | undefined) {
     if (this.tokenStorageService.getUser().roles === "STUDENT") {
       this.groupService.joinGroup(this.subject.id, this.tokenStorageService.getUser().id, groupId).subscribe(data => {
-        this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
-          this.groups = groups;
-        });
+        this.groups = this.getAllSubjectsWithStudents();
       }, error => {
-        console.log(error);
         this.groupService.removeFromGroup(this.tokenStorageService.getUser().id, groupId).subscribe(data => {
-          this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
-            this.groups = groups;
-          });
+          this.groups = this.getAllSubjectsWithStudents();
         }, error => {
           console.log(error);
         });
@@ -71,13 +70,29 @@ export class SubjectCardComponent implements OnInit {
     if (this.tokenStorageService.getUser().roles === "STUDENT") {
       this.groupService.createGroup(this.subject.id, this.tokenStorageService.getUser().id).subscribe(data => {
         console.log(data);
-        this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
-          this.groups = groups;
-          console.log(this.groups)
-        });
+        this.groups = this.getAllSubjectsWithStudents();
       }, error => {
         console.log(error);
       });
     }
+  }
+
+  getAllSubjectsWithStudents() {
+    this.groups = [];
+    this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
+      this.groups = groups;
+      let groupsStudent: Group[] = [];
+      this.groups.forEach(group =>{
+        group.students!.forEach(studentId =>{
+          group.studentsObjects = [];
+          this.studentService.getStudentById(studentId).subscribe(data =>{
+            group.studentsObjects!.push(data)
+          })
+        });
+        groupsStudent.push(group)
+      });
+      this.groups = groupsStudent;
+    });
+    return this.groups;
   }
 }

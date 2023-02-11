@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from "../models/subject.model";
-import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import {SubjectService} from "../_services/subject.service";
 import {SupervisorService} from "../_services/supervisor.service";
+import {GroupService} from "../_services/group.service";
 import {Supervisor} from "../models/supervisor.model";
+import {Group} from "../models/group.model";
 
 @Component({
   selector: 'app-subject-card',
@@ -17,15 +18,18 @@ export class SubjectCardComponent implements OnInit {
 
   supervisor = new Supervisor();
 
-  constructor(private route: ActivatedRoute , private subjectService: SubjectService , private supervisorService: SupervisorService) { }
+  groups: Group[] = [];
+
+  constructor(private route: ActivatedRoute,
+              private subjectService: SubjectService,
+              private supervisorService: SupervisorService,
+              private groupService :GroupService) { }
 
   ngOnInit(): void {
     this.subject = new Subject();
     this.supervisor = new Supervisor();
 
     this.subject.id = this.route.snapshot.params['id'];
-
-
 
     this.subjectService.getSubjectById(this.subject.id)
       .subscribe(data => {
@@ -34,17 +38,10 @@ export class SubjectCardComponent implements OnInit {
         this.supervisorService.getSupervisorById(data.supervisor).subscribe(data =>{
           this.supervisor = data;
         });
-        console.log(this.supervisor.id)
+        this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
+          this.groups = groups;
+          console.log(this.groups)
+        });
       }, error => console.log(error));
-
   }
-
-
-
-
-
-
-
-
-
 }

@@ -13,3 +13,14 @@
     <p class="jasmine-description">Number of groupes : {{ subject.groupNumber }}</p>
   </div>
 </div>
+
+<div class="d-flex flex-wrap mt-5">
+  <div class="card col-4" *ngFor="
+          let group of groups
+          let i = index
+        ">
+    <div *ngFor="let studentId of group.students">
+      {{studentId}}
+    </div>
+  </div>
+</div>

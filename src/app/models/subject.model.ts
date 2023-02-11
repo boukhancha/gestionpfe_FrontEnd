@@ -5,6 +5,6 @@ export class Subject {
   description?: string;
   groupNumber?: number;
   published?: boolean;
-  studentGroups?: number[];
+  studentGroups?: Array<any>;
   supervisorObject?: any;
 }

@@ -10,6 +10,7 @@ import { BoardModeratorComponent } from './board-moderator/board-moderator.compo
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import {RegisterSupervisorComponent} from "./register-supervisor/register-supervisor.component";
 import {SubjectCardComponent} from "./subject-card/subject-card.component";
+import {DomainAdminComponent} from "./domain-admin/domain-admin.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
     { path: 'subjectCard/:id', component: SubjectCardComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+    { path: 'domain', component: DomainAdminComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({

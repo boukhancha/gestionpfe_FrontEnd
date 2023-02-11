@@ -17,6 +17,7 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { RegisterSupervisorComponent } from './register-supervisor/register-supervisor.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SubjectCardComponent } from './subject-card/subject-card.component';
+import { DomainAdminComponent } from './domain-admin/domain-admin.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { SubjectCardComponent } from './subject-card/subject-card.component';
     BoardModeratorComponent,
     BoardUserComponent,
     RegisterSupervisorComponent,
-    SubjectCardComponent
+    SubjectCardComponent,
+    DomainAdminComponent
   ],
   imports: [
     BrowserModule,

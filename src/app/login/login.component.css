@@ -30,3 +30,10 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.loginStudentOrSupervisor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: lowercase;
+}

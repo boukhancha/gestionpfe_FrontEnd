@@ -15,12 +15,17 @@
 </div>
 
 <div class="d-flex flex-wrap mt-5">
-  <div class="card col-4" *ngFor="
+  <div class="card col-4 clickable" (click)="createGroup()">
+    create new group
+  </div>
+  <div class="card col-4 clickable" *ngFor="
           let group of groups
           let i = index
         ">
-    <div *ngFor="let studentId of group.students">
+    <div *ngFor="let studentId of group.students" (click)="joinGroup(group.id)">
       {{studentId}}
+    </div>
+    <div class="row d-flex">
     </div>
   </div>
 </div>

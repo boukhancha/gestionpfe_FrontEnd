@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Subject} from "../models/subject.model";
 
 const SUBJECT_API_URL = 'http://localhost:8090/api/v1/pfe-subject';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -49,4 +53,14 @@ export class SubjectService {
     return this.http.get(SUBJECT_API_URL + "/department/" + departmentId + "/search?keyword=" + keyword, { responseType: 'json' });
   }
 
+
+  createSubject(supervisor: any ,  subject: any, description: any, groupNumber: any) {
+    return this.http.post(SUBJECT_API_URL ,
+      {
+        "supervisor": supervisor,
+        "subject": subject,
+        "description": description,
+        "groupNumber": groupNumber
+      }, httpOptions);
+  }
 }

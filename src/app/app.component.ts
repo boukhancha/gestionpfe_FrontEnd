@@ -11,6 +11,7 @@ export class AppComponent {
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
+  showAdmin = false;
   firstName?: string;
 
   constructor(private tokenStorageService: TokenStorageService) { }
@@ -24,6 +25,7 @@ export class AppComponent {
 
       this.showAdminBoard = this.roles.includes('SUPERVISOR');
       this.showModeratorBoard = this.roles.includes('STUDENT');
+      this.showAdmin = this.roles.includes('ADMIN');
 
       this.firstName = user.firstName;
 
@@ -34,4 +36,6 @@ export class AppComponent {
     this.tokenStorageService.signOut();
     window.location.reload();
   }
+
+
 }

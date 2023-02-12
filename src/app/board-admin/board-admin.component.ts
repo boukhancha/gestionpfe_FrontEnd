@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import {SubjectService} from "../_services/subject.service";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: 'app-board-admin',
@@ -9,16 +11,31 @@ import { UserService } from '../_services/user.service';
 export class BoardAdminComponent implements OnInit {
   content?: string;
 
-  constructor(private userService: UserService) { }
+  constructor(private subjectService : SubjectService,
+              private tokenService : TokenStorageService
+              ) { }
 
   ngOnInit(): void {
-    this.userService.getAdminBoard().subscribe(
+
+  }
+
+  isSuccessful = false;
+
+  form: any = {
+    subject: null,
+    description: null,
+    groupNumber: null
+  };
+
+  onSubmit():void{
+    console.log(this.form)
+    const {subject, description , groupNumber} = this.form;
+    this.subjectService.createSubject(this.tokenService.getUser().id , subject, description,groupNumber).subscribe(
       data => {
-        this.content = data;
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
+        console.log(data);
+        this.isSuccessful = true;
       }
     );
+
   }
 }

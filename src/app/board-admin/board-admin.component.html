@@ -1,5 +1,65 @@
 <div class="container">
   <header class="jumbotron">
-    <p>{{ content }}</p>
+    <h1>Add a Pfe subject :</h1>
+    <form
+
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="subject">Subject :</label>
+        <input
+          type="text"
+          class="form-control"
+          name="domain"
+          [(ngModel)]="form.subject"
+          required
+          minlength="3"
+          maxlength="50"
+          #domain="ngModel"
+        />
+      </div>
+
+      <div class="form-group dropdown">
+        <label for="description">Description:</label>
+        <input
+          type="text"
+          class="form-control"
+          name="domain"
+          [(ngModel)]="form.description"
+          required
+          minlength="3"
+          maxlength="500"
+          #domain="ngModel"
+        />
+      </div>
+
+      <div class="form-group dropdown">
+        <label for="groupNumber">Group Number : </label>
+        <input
+          type="number"
+          class="form-control"
+          name="domain"
+          [(ngModel)]="form.groupNumber"
+          required
+          minlength="3"
+          maxlength="20"
+          #domain="ngModel"
+        />
+      </div>
+
+
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Submit</button>
+      </div>
+
+    </form
+    >
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      the subject was added Successfully
+    </div>
   </header>
 </div>

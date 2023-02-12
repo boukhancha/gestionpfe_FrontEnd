@@ -21,7 +21,8 @@ export class MySubjectComponent implements OnInit {
 
   form: any = {
     driveUrl: null,
-    rendezvousRequest: null
+    rendezvousRequest: null,
+    decliningMessage: null
   };
 
 
@@ -48,7 +49,6 @@ export class MySubjectComponent implements OnInit {
       });
     });
 
-
   }
 
   onSubmitDriveUrl() {
@@ -61,12 +61,27 @@ export class MySubjectComponent implements OnInit {
 
   onSubmitRendezvousRequest() {
     this.rendezvousService.createRendezvous(this.form.rendezvousRequest, this.group.id).subscribe(data => {
-      console.log(data);
       this.rendezvousService.getAllRendezvousByGroupId(this.group.id).subscribe(rendezvous => {
         this.rendezvousList = rendezvous;
       });
     }, error => {
       console.log(error);
+    });
+  }
+
+  acceptRendezvous(rendezvousId: number | undefined, groupId: number | undefined) {
+    this.rendezvousService.acceptRendezvous(rendezvousId, groupId).subscribe(data => {
+      this.rendezvousService.getAllRendezvousByGroupId(this.group.id).subscribe(rendezvous => {
+        this.rendezvousList = rendezvous;
+      });
+    });
+  }
+
+  rejectRendezvous(decliningMessage: HTMLInputElement, rendezvousId: number | undefined, groupId: number | undefined) {
+    this.rendezvousService.rejectRendezvous(decliningMessage.value, rendezvousId, groupId).subscribe(data => {
+      this.rendezvousService.getAllRendezvousByGroupId(this.group.id).subscribe(rendezvous => {
+        this.rendezvousList = rendezvous;
+      });
     });
   }
 }

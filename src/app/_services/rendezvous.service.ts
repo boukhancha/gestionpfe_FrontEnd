@@ -25,4 +25,14 @@ export class RendezvousService {
         request
       }, httpOptions);
   }
+
+  acceptRendezvous(rendezvousId: number | undefined, groupId: number | undefined) {
+    return this.http.post(RENDEZVOUS_API_URL + "/" + rendezvousId + "/group/" + groupId + "/accept" , httpOptions);
+  }
+
+  rejectRendezvous(decliningMessage: string, rendezvousId: number | undefined, groupId: number | undefined) {
+    return this.http.post(RENDEZVOUS_API_URL + "/" + rendezvousId + "/group/" + groupId + "/reject" ,{
+      decliningMessage
+    }, httpOptions);
+  }
 }

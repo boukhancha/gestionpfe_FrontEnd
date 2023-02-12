@@ -1,5 +1,5 @@
 <div>
-  {{this.subject.subject}}
+  {{this.subject.subject}} {{group.id}}
 </div>
 
 <div>
@@ -34,11 +34,11 @@
     </thead>
     <tbody>
     <tr *ngFor="let rendezvous of rendezvousList">
-      <td>{{ rendezvous.request}}</td>
-      <td>{{ rendezvous.rendezvous}}</td>
-      <td>{{ rendezvous.rendezvousState}}</td>
-      <td><input type="text" [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'"/><span>{{ rendezvous.decliningMessage}}</span></td>
-      <td><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'">Accept</button><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'">Refuse</button></td>
+      <td>{{rendezvous.id}} {{ rendezvous.request }}</td>
+      <td>{{ rendezvous.rendezvous }}</td>
+      <td>{{ rendezvous.rendezvousState }}</td>
+      <td><input [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" type="text" #decliningMessage [value]="rendezvous.decliningMessage"/><span *ngIf="rendezvous.rendezvousState === 'REJECTED'"></span></td>
+      <td><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" (click)="acceptRendezvous(rendezvous.id, group.id)">Accept</button><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" (click)="rejectRendezvous(decliningMessage, rendezvous.id, group.id)">Refuse</button></td>
     </tr>
     </tbody>
   </table>

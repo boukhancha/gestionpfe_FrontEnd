@@ -19,6 +19,10 @@ export class GroupService {
     return this.http.get<Array<Group>>(GROUP_API_URL + "/" + pfeSubject, { responseType: 'json' });
   }
 
+  getAllCompletedGroupsBySubject(pfeSubject: number | undefined): Observable<Array<Group>> {
+    return this.http.get<Array<Group>>(GROUP_API_URL + "/completed-groups/" + pfeSubject, { responseType: 'json' });
+  }
+
   createGroup(pfeSubject: number | undefined, currentStudentId: number) {
     return this.http.post(GROUP_API_URL + "/pfe-subject/" + pfeSubject , {
       currentStudentId
@@ -29,6 +33,14 @@ export class GroupService {
     return this.http.post(GROUP_API_URL + "/pfe-subject/" + pfeSubject + "/join/" + groupId , {
       currentStudentId
     }, httpOptions);
+  }
+
+  acceptGroup(groupId: number | undefined) {
+    return this.http.post(GROUP_API_URL + "/accept/" + groupId, httpOptions);
+  }
+
+  refuseGroup(groupId: number | undefined) {
+    return this.http.post(GROUP_API_URL + "/refuse/" + groupId, httpOptions);
   }
 
   removeFromGroup(currentStudentId: number, groupId: number | undefined) {

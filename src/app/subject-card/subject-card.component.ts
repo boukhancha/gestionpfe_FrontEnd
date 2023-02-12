@@ -26,13 +26,13 @@ export class SubjectCardComponent implements OnInit {
 
 
   groups: Group[] = [];
-
+  groupsCompleted: Group[] = [];
 
   constructor(private route: ActivatedRoute,
               private subjectService: SubjectService,
               private supervisorService: SupervisorService,
               private groupService: GroupService,
-              private tokenStorageService: TokenStorageService,
+              public tokenStorageService: TokenStorageService,
               private studentService : StudentService) { }
 
   ngOnInit(): void {
@@ -77,22 +77,55 @@ export class SubjectCardComponent implements OnInit {
     }
   }
 
+  acceptGroup(groupId: number | undefined) {
+    this.groupService.acceptGroup(groupId).subscribe(data => {
+      console.log(data);
+      this.groups = this.getAllSubjectsWithStudents();
+    })
+  }
+
+  refuseGroup(groupId: number | undefined) {
+    this.groupService.refuseGroup(groupId).subscribe(data => {
+      console.log(data);
+      this.groups = this.getAllSubjectsWithStudents();
+    })
+  }
+
   getAllSubjectsWithStudents() {
-    this.groups = [];
-    this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
-      this.groups = groups;
-      let groupsStudent: Group[] = [];
-      this.groups.forEach(group =>{
-        group.students!.forEach(studentId =>{
-          group.studentsObjects = [];
-          this.studentService.getStudentById(studentId).subscribe(data =>{
-            group.studentsObjects!.push(data)
-          })
+    if(this.tokenStorageService.hasRole("SUPERVISOR")) {
+      this.groupsCompleted = [];
+      this.groupService.getAllCompletedGroupsBySubject(this.subject.id).subscribe(groups => {
+        this.groups = groups;
+        let groupsStudent: Group[] = [];
+        this.groups.forEach(group =>{
+          group.students!.forEach(studentId =>{
+            group.studentsObjects = [];
+            this.studentService.getStudentById(studentId).subscribe(data =>{
+              group.studentsObjects!.push(data)
+            })
+          });
+          groupsStudent.push(group)
         });
-        groupsStudent.push(group)
+        this.groupsCompleted = groupsStudent;
       });
-      this.groups = groupsStudent;
-    });
-    return this.groups;
+      return this.groupsCompleted;
+    } else {
+      this.groups = [];
+      this.groupService.getAllGroupsBySubject(this.subject.id).subscribe(groups => {
+        this.groups = groups;
+        let groupsStudent: Group[] = [];
+        this.groups.forEach(group =>{
+          group.students!.forEach(studentId =>{
+            group.studentsObjects = [];
+            this.studentService.getStudentById(studentId).subscribe(data =>{
+              group.studentsObjects!.push(data)
+            })
+          });
+          groupsStudent.push(group)
+        });
+        this.groups = groupsStudent;
+      });
+      return this.groups;
+    }
   }
 }

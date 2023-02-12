@@ -35,4 +35,9 @@ export class TokenStorageService {
 
     return {};
   }
+
+  public hasRole(role: string) {
+    const user = this.getUser();
+    return user.roles === role;
+  }
 }

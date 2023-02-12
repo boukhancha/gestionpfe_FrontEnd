@@ -35,4 +35,10 @@ export class RendezvousService {
       decliningMessage
     }, httpOptions);
   }
+
+  sendDateRendezvous(rendezvous: string, rendezvousId: number | undefined, groupId: number | undefined) {
+    return this.http.post(RENDEZVOUS_API_URL + "/" + rendezvousId + "/group/" + groupId ,{
+      rendezvous
+    }, httpOptions);
+  }
 }

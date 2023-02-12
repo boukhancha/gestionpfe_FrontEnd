@@ -23,10 +23,10 @@
     <tr *ngFor="let rendezvous of rendezvousList">
       <td>{{ rendezvous.request}}</td>
       <td><div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
-        <input type="datetime-local">
+        <input type="datetime-local" #date>
       </div></td>
       <td>{{ rendezvous.rendezvousState}}</td>
-      <td><button class="btn">send response</button></td>
+      <td><button class="btn" (click)="sendDateRendezvous(date, rendezvous.id, group.id)">send response</button></td>
     </tr>
     </tbody>
   </table>

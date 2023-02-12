@@ -48,7 +48,6 @@ export class MySubjectComponent implements OnInit {
         });
       });
     });
-
   }
 
   onSubmitDriveUrl() {
@@ -84,4 +83,5 @@ export class MySubjectComponent implements OnInit {
       });
     });
   }
+
 }

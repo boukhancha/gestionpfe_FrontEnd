@@ -19,6 +19,9 @@ export class GroupCardComponent implements OnInit {
   rendezvousList: any;
 
 
+  isSuccessful = false;
+
+
   constructor(private route : ActivatedRoute,
               private groupService : GroupService,
               private studentServie : StudentService,
@@ -54,6 +57,7 @@ export class GroupCardComponent implements OnInit {
     console.log(date);
     this.rendezService.sendDateRendezvous(date, rendezbousId, groupId).subscribe(data => {
       console.log(data);
+      this.isSuccessful = true;
       this.rendezService.getAllRendezvousByGroupId(this.group.id).subscribe(data=>{
         this.rendezvousList = data;
       }, error => {

@@ -18,6 +18,7 @@ import { RegisterSupervisorComponent } from './register-supervisor/register-supe
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SubjectCardComponent } from './subject-card/subject-card.component';
 import { DomainAdminComponent } from './domain-admin/domain-admin.component';
+import { SupervisorSubjectComponent } from './supervisor-subject/supervisor-subject.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { DomainAdminComponent } from './domain-admin/domain-admin.component';
     BoardUserComponent,
     RegisterSupervisorComponent,
     SubjectCardComponent,
-    DomainAdminComponent
+    DomainAdminComponent,
+    SupervisorSubjectComponent
   ],
   imports: [
     BrowserModule,

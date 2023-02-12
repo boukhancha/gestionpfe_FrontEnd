@@ -11,6 +11,8 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import {RegisterSupervisorComponent} from "./register-supervisor/register-supervisor.component";
 import {SubjectCardComponent} from "./subject-card/subject-card.component";
 import {DomainAdminComponent} from "./domain-admin/domain-admin.component";
+import {SupervisorSubjectComponent} from "./supervisor-subject/supervisor-subject.component";
+
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,6 +25,7 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
     { path: 'subjectCard/:id', component: SubjectCardComponent },
     { path: 'domain', component: DomainAdminComponent },
+    { path: 'superVisorSubject', component: SupervisorSubjectComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 

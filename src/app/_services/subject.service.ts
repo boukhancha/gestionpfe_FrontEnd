@@ -63,4 +63,9 @@ export class SubjectService {
         "groupNumber": groupNumber
       }, httpOptions);
   }
+
+
+  getSubjectBySupervisorId(supervisorId: any): Observable<Array<Subject>> {
+    return this.http.get<Array<Subject>>(SUBJECT_API_URL +'/'+ supervisorId, { responseType: 'json' });
+  }
 }

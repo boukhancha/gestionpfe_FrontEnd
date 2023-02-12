@@ -10,7 +10,7 @@
       </p>
     </div>
     <p class="jasmine-description">{{ subject.description }}</p>
-    <p class="jasmine-description">Number of groupes : {{ subject.groupNumber }}</p>
+    <p class="jasmine-description">Number of student by group: {{ subject.groupNumber }}</p>
   </div>
 </div>
 <div class="d-flex flex-wrap mt-5" *ngIf="!this.tokenStorageService.hasRole('SUPERVISOR')">
@@ -33,7 +33,7 @@
     </div>
   </div>
 </div>
-<div class="d-flex flex-wrap mt-5" *ngIf="this.tokenStorageService.hasRole('SUPERVISOR')">
+<div class="d-flex flex-wrap mt-5" *ngIf="this.tokenStorageService.hasRole('SUPERVISOR') && this.tokenStorageService.getUser().id == supervisor.id ">
   <div class="card col-4 clickable" *ngFor="
           let group of groupsCompleted
           let i = index

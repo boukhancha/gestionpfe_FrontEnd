@@ -49,7 +49,10 @@ export class GroupCardComponent implements OnInit {
   }
 
   sendDateRendezvous(rendezvous: HTMLInputElement, rendezbousId: number | undefined, groupId: number | undefined) {
-    this.rendezService.sendDateRendezvous(rendezvous.value, rendezbousId, groupId).subscribe(data => {
+    console.log(rendezvous.value);
+    let date = new Date(rendezvous.value).toISOString();
+    console.log(date);
+    this.rendezService.sendDateRendezvous(date, rendezbousId, groupId).subscribe(data => {
       console.log(data);
       this.rendezService.getAllRendezvousByGroupId(this.group.id).subscribe(data=>{
         this.rendezvousList = data;

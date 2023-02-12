@@ -1,4 +1,5 @@
 <h1>Group Id : {{group.id}}</h1>
+<h2 class="font-italic">Groupe Participants: </h2>
 <div *ngFor="let student of group.studentsObjects">
   <div class="image_text">
     <img class="icon_avatar"
@@ -9,6 +10,7 @@
     </p>
   </div>
 </div>
+<br>
 <div>
   <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -26,7 +28,7 @@
         <input type="datetime-local" #date>
       </div></td>
       <td>{{ rendezvous.rendezvousState}}</td>
-      <td><button class="btn" (click)="sendDateRendezvous(date, rendezvous.id, group.id)">send response</button></td>
+      <td><button class="btn-primary" (click)="sendDateRendezvous(date, rendezvous.id, group.id)">send response</button></td>
     </tr>
     </tbody>
   </table>

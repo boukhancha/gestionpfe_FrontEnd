@@ -53,6 +53,9 @@ export class SubjectService {
     return this.http.get(SUBJECT_API_URL + "/department/" + departmentId + "/search?keyword=" + keyword, { responseType: 'json' });
   }
 
+  getSubjectByGroup(studentGroupId: number | undefined) {
+    return this.http.get(SUBJECT_API_URL + "/student-group/" + studentGroupId, { responseType: 'json' });
+  }
 
   createSubject(supervisor: any ,  subject: any, description: any, groupNumber: any) {
     return this.http.post(SUBJECT_API_URL ,

@@ -1,0 +1,45 @@
+<div>
+  {{this.subject.subject}}
+</div>
+
+<div>
+  <p *ngFor="let student of group.studentsObjects">{{student.firstName}}</p>
+</div>
+
+<div>
+  {{group.driveUrl}}
+  <form (ngSubmit)="onSubmitDriveUrl()">
+    <input type="text" name="driveUrl" [(ngModel)]="form.driveUrl">
+  </form>
+</div>
+<h2>Rendez vous</h2>
+
+<div>
+  <form (ngSubmit)="onSubmitRendezvousRequest()">
+    <textarea maxlength="255" name="rendezvous" [(ngModel)]="form.rendezvousRequest"></textarea>
+    <button>Request</button>
+  </form>
+</div>
+
+<div>
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+      <th>Request</th>
+      <th>Rendezvous</th>
+      <th>Rendezvous State</th>
+      <th>Declining Message</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let rendezvous of rendezvousList">
+      <td>{{ rendezvous.request}}</td>
+      <td>{{ rendezvous.rendezvous}}</td>
+      <td>{{ rendezvous.rendezvousState}}</td>
+      <td><input type="text" [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'"/><span>{{ rendezvous.decliningMessage}}</span></td>
+      <td><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'">Accept</button><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'">Refuse</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

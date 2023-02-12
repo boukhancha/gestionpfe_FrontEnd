@@ -48,4 +48,15 @@ export class GroupService {
       currentStudentId
     }, httpOptions);
   }
+
+  getByAcceptedStudent(currentStudentId: number): Observable<Group> {
+    return this.http.get<Group>(GROUP_API_URL + "/student/" + currentStudentId, httpOptions);
+  }
+
+  createDriveUrl(groupId: number | undefined, driveUrl: string) {
+    return this.http.post(GROUP_API_URL + "/" + groupId + "/add-drive/", {
+      driveUrl
+    }, httpOptions);
+  }
+
 }

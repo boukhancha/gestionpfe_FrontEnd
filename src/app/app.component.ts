@@ -11,6 +11,7 @@ export class AppComponent {
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
+  showMySubject = false;
   showAdmin = false;
   firstName?: string;
 
@@ -26,6 +27,7 @@ export class AppComponent {
       this.showAdminBoard = this.roles.includes('SUPERVISOR');
       this.showModeratorBoard = this.roles.includes('STUDENT');
       this.showAdmin = this.roles.includes('ADMIN');
+      this.showMySubject = this.roles.includes('STUDENT_ACCEPTED_IN_GROUP');
 
       this.firstName = user.firstName;
 

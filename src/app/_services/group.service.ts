@@ -59,4 +59,8 @@ export class GroupService {
     }, httpOptions);
   }
 
+
+  getGroupById(id: number | undefined) {
+    return this.http.get<Group>(GROUP_API_URL + "/group/" + id, { responseType: 'json' });
+  }
 }

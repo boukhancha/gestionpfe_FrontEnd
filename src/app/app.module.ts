@@ -20,6 +20,7 @@ import { SubjectCardComponent } from './subject-card/subject-card.component';
 import { DomainAdminComponent } from './domain-admin/domain-admin.component';
 import { MySubjectComponent } from './my-subject/my-subject.component';
 import { SupervisorSubjectComponent } from './supervisor-subject/supervisor-subject.component';
+import { GroupCardComponent } from './group-card/group-card.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { SupervisorSubjectComponent } from './supervisor-subject/supervisor-subj
     SubjectCardComponent,
     DomainAdminComponent,
     MySubjectComponent,
-    SupervisorSubjectComponent
+    SupervisorSubjectComponent,
+    GroupCardComponent
   ],
   imports: [
     BrowserModule,

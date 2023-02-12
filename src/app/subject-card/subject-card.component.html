@@ -33,11 +33,14 @@
     </div>
   </div>
 </div>
+
 <div class="d-flex flex-wrap mt-5" *ngIf="this.tokenStorageService.hasRole('SUPERVISOR') && this.tokenStorageService.getUser().id == supervisor.id ">
   <div class="card col-4 clickable" *ngFor="
           let group of groupsCompleted
           let i = index
         ">
+    <a  href="/groupCard/{{group.id}}" style="  color: inherit;text-decoration: inherit;"
+        routerLink="/groupCard/{{group.id}}">
     <div *ngIf="group.studentGroupState === 'PENDING'">PENDING</div>
     <div *ngIf="group.studentGroupState === 'ACCEPTED'">ACCEPTED</div>
     <div *ngIf="group.studentGroupState === 'REJECTED'">REJECTED</div>
@@ -55,6 +58,7 @@
       <button class="btn btn-success w-50" (click)="acceptGroup(group.id)">Accept</button>
       <button class="btn btn-danger w-50" (click)="refuseGroup(group.id)">Refuse</button>
     </div>
+    </a>
   </div>
 </div>
 

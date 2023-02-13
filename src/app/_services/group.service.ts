@@ -63,4 +63,8 @@ export class GroupService {
   getGroupById(id: number | undefined) {
     return this.http.get<Group>(GROUP_API_URL + "/group/" + id, { responseType: 'json' });
   }
+
+  publishDriveUrl(groupId: number | undefined) {
+    return this.http.post(GROUP_API_URL + "/" + groupId + "/publish-drive-link/", httpOptions);
+  }
 }

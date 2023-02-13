@@ -6,6 +6,7 @@ import {Student} from "../models/student.model";
 import {StudentService} from "../_services/student.service";
 import {group} from "@angular/animations";
 import {RendezvousService} from "../_services/rendezvous.service";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 
 @Component({
@@ -22,7 +23,8 @@ export class GroupCardComponent implements OnInit {
   constructor(private route : ActivatedRoute,
               private groupService : GroupService,
               private studentServie : StudentService,
-              private rendezService : RendezvousService
+              private rendezService : RendezvousService,
+              public tokenStorageService: TokenStorageService
               ) { }
 
   ngOnInit(): void {
@@ -56,6 +58,14 @@ export class GroupCardComponent implements OnInit {
       }, error => {
         console.log(error);
       })
+    })
+  }
+
+  onSubmitPublishUrl(groupId: number | undefined) {
+    this.groupService.publishDriveUrl(groupId).subscribe(data => {
+      console.log(data);
+    }, error => {
+      console.log(error);
     })
   }
 }

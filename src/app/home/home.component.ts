@@ -8,6 +8,8 @@ import {EstablishmentService} from "../_services/establishment.service";
 import {DepartmentService} from "../_services/department.service";
 import {Subject} from "../models/subject.model";
 import {Router} from "@angular/router";
+import {Group} from "../models/group.model";
+import {GroupService} from "../_services/group.service";
 
 @Component({
   selector: 'app-home',

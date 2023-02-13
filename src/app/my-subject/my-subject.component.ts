@@ -28,7 +28,7 @@ export class MySubjectComponent implements OnInit {
 
   constructor(private subjectService: SubjectService,
               private groupService: GroupService,
-              private tokenStorageService: TokenStorageService,
+              public tokenStorageService: TokenStorageService,
               private studentService: StudentService,
               private rendezvousService: RendezvousService) { }
 
@@ -83,5 +83,6 @@ export class MySubjectComponent implements OnInit {
       });
     });
   }
+
 
 }

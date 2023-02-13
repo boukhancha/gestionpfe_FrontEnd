@@ -45,5 +45,7 @@ export class SupervisorSubjectComponent implements OnInit {
   };
 
 
+  onSubmitPublishUrl() {
 
+  }
 }

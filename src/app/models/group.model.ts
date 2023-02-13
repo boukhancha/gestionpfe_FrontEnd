@@ -6,6 +6,6 @@ export class Group {
   subject?: number;
   studentGroupState?: string;
   driveUrl?: string;
-  isDriveUrlPublished?: boolean;
   studentsObjects?: Array<Student>;
+  driveUrlPublished?: boolean;
 }

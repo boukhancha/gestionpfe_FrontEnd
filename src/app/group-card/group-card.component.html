@@ -10,6 +10,12 @@
   </div>
 </div>
 <div>
+  {{group.driveUrl}}
+  <form (ngSubmit)="onSubmitPublishUrl(group.id)">
+    <button *ngIf="tokenStorageService.hasRole('SUPERVISOR') && this.group.driveUrl">Publish Link</button>
+  </form>
+</div>
+<div>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     <tr>

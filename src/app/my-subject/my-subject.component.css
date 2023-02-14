@@ -1,0 +1,68 @@
+.submitDriveBtn{
+  height: 40px;
+  margin-left: auto;
+}
+
+.submitDriveForm{
+  display: flex;
+}
+
+.submitDriveInput{
+  height: 40px;
+}
+
+.rendezVousTitle{
+  margin-top:50px ;
+}
+.subjectTitle{
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.requestForm{
+  display: flex;
+  margin-bottom: 30px;
+}
+.requestbtn{
+  height: 40px;
+  margin: auto 0 auto auto;
+}
+.decliningMessage{
+  width: 100%;
+}
+.rejectRendezvousBtn{
+  margin-left: auto;
+}
+
+.actionRendezvous{
+  display: flex;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+.items-per-page {
+  width: 75px;
+}
+
+.icon_avatar{
+  border-radius: 50%;
+  margin-right: 10px;
+  height: 50px;
+  width: 50px;
+
+}
+.image_text{
+  display: flex;
+  align-items:center;
+}
+
+a.card {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.groupMembers{
+  margin: 30px 0px;
+}

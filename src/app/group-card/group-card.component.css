@@ -9,3 +9,11 @@
   display: flex;
   align-items:center;
 }
+
+.submitDriveBtn{
+  margin-left: auto;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}

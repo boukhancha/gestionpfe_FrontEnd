@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subject} from "../models/subject.model";
 import {SubjectService} from "../_services/subject.service";
 import {Group} from "../models/group.model";
@@ -30,14 +30,15 @@ export class MySubjectComponent implements OnInit {
               private groupService: GroupService,
               public tokenStorageService: TokenStorageService,
               private studentService: StudentService,
-              private rendezvousService: RendezvousService) { }
+              private rendezvousService: RendezvousService) {
+  }
 
   ngOnInit(): void {
     this.groupService.getByAcceptedStudent(this.tokenStorageService.getUser().id).subscribe(group => {
       this.group = group;
-      this.group.students!.forEach(studentId =>{
+      this.group.students!.forEach(studentId => {
         this.group.studentsObjects = [];
-        this.studentService.getStudentById(studentId).subscribe(data =>{
+        this.studentService.getStudentById(studentId).subscribe(data => {
           this.group.studentsObjects!.push(data)
         });
         this.subjectService.getSubjectByGroup(this.group.id).subscribe(subject => {
@@ -51,8 +52,9 @@ export class MySubjectComponent implements OnInit {
   }
 
   onSubmitDriveUrl() {
-    this.groupService.createDriveUrl(this.group.id, this.form.driveUrl).subscribe(data => {
+    this.groupService.createDriveUrl(this.group.id, this.form.driveUrl).subscribe((data: any) => {
       console.log(data);
+      this.group.driveUrl = data.driveUrl
     }, error => {
       console.log(error);
     });

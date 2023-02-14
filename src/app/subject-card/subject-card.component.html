@@ -10,14 +10,14 @@
       </p>
     </div>
     <p class="jasmine-description">{{ subject.description }}</p>
-    <p class="jasmine-description">Number of student by group: {{ subject.groupNumber }}</p>
+    <p class="jasmine-description">Number of student in group: {{ subject.groupNumber }}</p>
   </div>
 </div>
 <div class="d-flex flex-wrap mt-5" *ngIf="!this.tokenStorageService.hasRole('SUPERVISOR')">
   <div *ngIf="tokenStorageService.hasRole('STUDENT')" class="card col-4 clickable" (click)="createGroup()">
     create new group
   </div>
-  <div class="card col-4 clickable" *ngFor="
+  <div class="card col-4 clickable p-3" *ngFor="
           let group of groups
           let i = index
         ">
@@ -31,20 +31,21 @@
         </p>
       </div>
     </div>
+    <div *ngIf="group.driveUrlPublished">
+      <a href="{{group.driveUrl}}" target="_blank" >{{group.driveUrl}}</a>
+    </div>
   </div>
 </div>
 
-<div class="d-flex flex-wrap mt-5"
+<div class="d-flex flex-wrap mt-5 "
      *ngIf="this.tokenStorageService.hasRole('SUPERVISOR') && this.tokenStorageService.getUser().id == supervisor.id ">
-  <div class="card col-4 clickable" *ngFor="
+  <div class="card col-4 clickable p-3" *ngFor="
           let group of groupsCompleted
           let i = index
         ">
     <a href="/groupCard/{{group.id}}" style="  color: inherit;text-decoration: inherit;"
        routerLink="/groupCard/{{group.id}}">
-      <div *ngIf="group.studentGroupState === 'PENDING'">PENDING</div>
-      <div *ngIf="group.studentGroupState === 'ACCEPTED'">ACCEPTED</div>
-      <div *ngIf="group.studentGroupState === 'REJECTED'">REJECTED</div>
+
       <div *ngFor="let student of group.studentsObjects">
         <div class="image_text">
           <img class="icon_avatar"
@@ -55,15 +56,20 @@
           </p>
         </div>
       </div>
+      <div class="groupPending"*ngIf="group.studentGroupState === 'PENDING'">PENDING</div>
+      <div class="groupAccepted" *ngIf="group.studentGroupState === 'ACCEPTED'">ACCEPTED</div>
+      <div class="groupRejected" *ngIf="group.studentGroupState === 'REJECTED'">REJECTED</div>
+
+    </a>
       <div *ngIf="group.driveUrlPublished">
-        {{group.driveUrl}}
+        <a href="{{group.driveUrl}}" target="_blank" >{{group.driveUrl}}</a>
       </div>
       <div class="row d-flex flex-row"
            *ngIf="!(group.studentGroupState === 'ACCEPTED' || group.studentGroupState === 'REJECTED')">
         <button class="btn btn-success w-50" (click)="acceptGroup(group.id)">Accept</button>
         <button class="btn btn-danger w-50" (click)="refuseGroup(group.id)">Refuse</button>
       </div>
-    </a>
+
   </div>
 </div>
 

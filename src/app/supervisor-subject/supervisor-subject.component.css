@@ -15,3 +15,12 @@ a.card {
   color: inherit;
   text-decoration: inherit;
 }
+
+h3 {
+  margin-top: 10px;
+}
+
+.supervisorName{
+  margin-top: 20px;
+}
+

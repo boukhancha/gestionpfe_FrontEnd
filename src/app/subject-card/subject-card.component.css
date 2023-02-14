@@ -13,3 +13,18 @@
 .clickable {
   cursor: pointer;
 }
+
+.groupPending{
+  color: orange;
+  font-weight: 600;
+}
+
+.groupAccepted{
+  color: green;
+  font-weight: 600;
+}
+
+.groupRejected{
+  color: red;
+  font-weight: 600;
+}

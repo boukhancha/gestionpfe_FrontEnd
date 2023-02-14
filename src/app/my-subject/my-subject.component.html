@@ -1,23 +1,42 @@
-<div>
-  {{this.subject.subject}} {{group.id}}
+<div class="subjectTitle">
+  <h2>
+    {{this.subject.subject}}
+  </h2>
+</div>
+
+<h4>
+  Group Members :
+</h4>
+<div class="groupMembers" *ngFor="let student of group.studentsObjects">
+  <div class="image_text mb-2">
+    <img class="icon_avatar"
+         src="https://ui-avatars.com/api/?name={{student.firstName}}+{{student.lastName}}&background=random"
+         alt="Avatar">
+    <p class="card-text"><span
+      style="">{{student.firstName }} {{ student.lastName}}</span>
+    </p>
+  </div>
 </div>
 
 <div>
-  <p *ngFor="let student of group.studentsObjects">{{student.firstName}}</p>
-</div>
-
-<div>
-  {{group.driveUrl}}
-  <form (ngSubmit)="onSubmitDriveUrl()">
-    <input type="text" name="driveUrl" [(ngModel)]="form.driveUrl">
+  <label>Google Drive Link</label>
+  <div class="card bg-light mb-3 " >
+    <div class=" col-12 card-header"><a href="{{group.driveUrl}}" target="_blank">{{group.driveUrl}}</a></div>
+  </div>
+  <hr>
+  <label>Submit Google Drive Link</label>
+  <form class="submitDriveForm" (ngSubmit)="onSubmitDriveUrl()">
+    <input class=" submitDriveInput col-9" type="text" name="driveUrl" [(ngModel)]="form.driveUrl">
+    <button type="button" class="submitDriveBtn col-2 btn btn-outline-success" (click)="onSubmitDriveUrl()">Submit Link</button>
   </form>
 </div>
-<h2>Rendez vous</h2>
+
+<h2 class="rendezVousTitle">Rendez vous</h2>
 
 <div>
-  <form (ngSubmit)="onSubmitRendezvousRequest()">
-    <textarea maxlength="255" name="rendezvous" [(ngModel)]="form.rendezvousRequest"></textarea>
-    <button>Request</button>
+  <form class="requestForm" (ngSubmit)="onSubmitRendezvousRequest()">
+    <textarea class="col-9" maxlength="255" name="rendezvous" [(ngModel)]="form.rendezvousRequest"></textarea>
+    <button type="button" class="col-2 requestbtn btn btn-outline-info" (click)="onSubmitRendezvousRequest()">Request</button>
   </form>
 </div>
 
@@ -25,20 +44,20 @@
   <table class="table table-bordered table-striped table-hover">
     <thead>
     <tr>
-      <th>Request</th>
-      <th>Rendezvous</th>
-      <th>Rendezvous State</th>
-      <th>Declining Message</th>
-      <th>Action</th>
+      <th class="col-4">Request</th>
+      <th class="col-2">Rendezvous</th>
+      <th class="col-2">Rendezvous State</th>
+      <th class="col-2">Declining Message</th>
+      <th class="col-2">Action</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let rendezvous of rendezvousList">
-      <td>{{rendezvous.id}} {{ rendezvous.request }}</td>
+      <td>{{ rendezvous.request }}</td>
       <td>{{ rendezvous.rendezvous }}</td>
       <td>{{ rendezvous.rendezvousState }}</td>
-      <td><input [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" type="text" #decliningMessage [value]="rendezvous.decliningMessage"/><span *ngIf="rendezvous.rendezvousState === 'REJECTED'"></span></td>
-      <td><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" (click)="acceptRendezvous(rendezvous.id, group.id)">Accept</button><button [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" (click)="rejectRendezvous(decliningMessage, rendezvous.id, group.id)">Refuse</button></td>
+      <td><input class="decliningMessage" [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" type="text" #decliningMessage [value]="rendezvous.decliningMessage"/><span *ngIf="rendezvous.rendezvousState === 'REJECTED'"></span></td>
+      <td><div class="actionRendezvous"> <button class="btn btn-success" [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" (click)="acceptRendezvous(rendezvous.id, group.id)">Accept</button><button class="btn btn-danger rejectRendezvousBtn" [disabled]="rendezvous.rendezvousState !== 'WAITING_FOR_VALIDATION'" (click)="rejectRendezvous(decliningMessage, rendezvous.id, group.id)">Refuse</button></div></td>
     </tr>
     </tbody>
   </table>

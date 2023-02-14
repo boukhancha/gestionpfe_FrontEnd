@@ -27,6 +27,7 @@
         <th class="col-4">Request</th>
         <th class="col-4">Rendezvous</th>
         <th class="col-2">Rendezvous State</th>
+        <th class="col-2">Declining Message</th>
         <th class="col-4">Action</th>
       </tr>
       </thead>
@@ -35,19 +36,16 @@
         <td>{{ rendezvous.request}}</td>
         <td>
           <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
-            <input type="datetime-local" #date>
+            <input type="datetime-local" #date [disabled]="rendezvous.rendezvousState !== 'PENDING'">
           </div>
         </td>
         <td>{{ rendezvous.rendezvousState}}</td>
+        <td>{{ rendezvous.decliningMessage}}</td>
         <td>
-          <div class="d-flex justify-content-center"><button class="btn btn-info" (click)="sendDateRendezvous(date, rendezvous.id, group.id)">send response</button></div>
+          <div class="d-flex justify-content-center"><button class="btn btn-info" (click)="sendDateRendezvous(date, rendezvous.id, group.id)" [disabled]="rendezvous.rendezvousState !== 'PENDING'">send response</button></div>
         </td>
       </tr>
       </tbody>
     </table>
-    <div class="alert alert-success" *ngIf="isSuccessful">
-      Your response was sent successfully!
-    </div>
-
   </div>
-
+</div>

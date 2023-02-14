@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DomainService} from "../_services/domain.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-domain-admin',
@@ -8,16 +9,16 @@ import {DomainService} from "../_services/domain.service";
 })
 export class DomainAdminComponent implements OnInit {
 
-  isSuccessful = false;
-
   form: any = {
     domain: null,
     role: null
   };
 
   domains: any = [];
+  isSuccessful: boolean = false;
 
-  constructor( private domainService: DomainService) { }
+  constructor( private domainService: DomainService,
+               private toastrService :ToastrService) { }
 
   ngOnInit(): void {
     this.retrieveDomains()
@@ -26,19 +27,21 @@ export class DomainAdminComponent implements OnInit {
   retrieveDomains() {
     this.domainService.getAllDomains().subscribe(response => {
       this.domains = response;
-      console.log(this.domains)
+    }, _ => {
+      this.toastrService.error("couldn't fetch domains");
     })
   }
 
   onSubmit(): void {
     console.log(this.form)
+    this.isSuccessful = true;
     const {domain, role} = this.form;
     this.domainService.createDomain(domain, role).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
+      _ => {
+        this.toastrService.success("domain has been created.");
         this.retrieveDomains()
-
+      }, _ => {
+        this.toastrService.error("domain has not been created.");
       }
     );
 
@@ -47,6 +50,5 @@ export class DomainAdminComponent implements OnInit {
   roleChanged(event: any) {
     this.form.role = event.target.value;
   }
-
 
 }

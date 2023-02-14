@@ -7,6 +7,7 @@ import {UniversityService} from "../_services/university.service";
 import {EstablishmentService} from "../_services/establishment.service";
 import {DepartmentService} from "../_services/department.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-register-supervisor',
@@ -44,6 +45,7 @@ export class RegisterSupervisorComponent implements OnInit {
               private universityService: UniversityService,
               private establishmentService: EstablishmentService,
               private departmentService: DepartmentService,
+              private toastrService: ToastrService,
               private router: Router
   ) {
   }
@@ -51,9 +53,12 @@ export class RegisterSupervisorComponent implements OnInit {
   ngOnInit(): void {
     this.retrieveUniversities();
   }
+
   retrieveUniversities() {
     this.universityService.getAllUniversities().subscribe(response => {
       this.universities = response;
+    }, _ => {
+      this.toastrService.error("couldn't fetch all universities");
     })
   }
 
@@ -65,6 +70,8 @@ export class RegisterSupervisorComponent implements OnInit {
     } else {
       this.establishmentService.getEstablishmentsByUniversity(this.filter.selectedUniversity).subscribe(response => {
         this.establishments = response;
+      },_ => {
+        this.toastrService.error("couldn't fetch all establishments");
       });
     }
   }
@@ -80,6 +87,8 @@ export class RegisterSupervisorComponent implements OnInit {
     } else {
       this.departmentService.getDepartmentByEstablishment(this.filter.selectedEstablishment).subscribe(response => {
         this.departments = response;
+      }, _ => {
+        this.toastrService.error("couldn't fetch all departments");
       });
     }
   }
@@ -89,11 +98,12 @@ export class RegisterSupervisorComponent implements OnInit {
     console.log(this.filter.selectedDepartment)
     this.authService.registerSupervisor(firstName, lastName, email, password, departmentId).subscribe(
       data => {
-        console.log(data);
+        this.toastrService.success("supervisor has been registered")
         this.isSuccessful = true;
         this.isSignUpFailed = false;
       },
       err => {
+        this.toastrService.error("supervisor couldn't be registered registered")
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }

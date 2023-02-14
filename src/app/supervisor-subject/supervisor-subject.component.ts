@@ -6,6 +6,7 @@ import {SupervisorService} from "../_services/supervisor.service";
 import {Subject} from "../models/subject.model";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -25,22 +26,20 @@ export class SupervisorSubjectComponent implements OnInit {
               private subjectService: SubjectService,
               private supervisorService: SupervisorService,
               private token: TokenStorageService,
-              private router : Router) {
+              private toastrService:ToastrService) {
   }
 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
     this.getSubjectsWithSupervisor(this.currentUser.id);
-    console.log(this.currentUser.id);
   }
 
 
   getSubjectsWithSupervisor(supervisorId: any) {
     this.subjectService.getSubjectBySupervisorId(supervisorId).subscribe(response => {
-      console.log(response);
       this.subjects = response;
     }, error => {
-      console.log(error);
+      this.toastrService.error("couldn't fetch subjects by supervisor id");
     });
   };
 

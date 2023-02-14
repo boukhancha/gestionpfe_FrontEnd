@@ -8,7 +8,7 @@ import {GroupService} from "../_services/group.service";
 import {StudentService} from "../_services/student.service";
 import {Supervisor} from "../models/supervisor.model";
 import {Group} from "../models/group.model";
-import {Student} from "../models/student.model";
+import {ToastrService} from "ngx-toastr";
 
 
 
@@ -34,7 +34,8 @@ export class SubjectCardComponent implements OnInit {
               private supervisorService: SupervisorService,
               private groupService: GroupService,
               public tokenStorageService: TokenStorageService,
-              private studentService : StudentService) { }
+              private studentService : StudentService,
+              private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.subject = new Subject();
@@ -48,6 +49,8 @@ export class SubjectCardComponent implements OnInit {
         this.subject = data;
         this.supervisorService.getSupervisorById(data.supervisor).subscribe(data => {
           this.supervisor = data;
+        }, _ => {
+          this.toastrService.error("couldn't fetch supervisor by id")
         });
         this.groups = this.getAllSubjectsWithStudents();
       }, error => console.log(error));
@@ -56,12 +59,14 @@ export class SubjectCardComponent implements OnInit {
   joinGroup(groupId: number | undefined) {
     if (this.tokenStorageService.getUser().roles === "STUDENT") {
       this.groupService.joinGroup(this.subject.id, this.tokenStorageService.getUser().id, groupId).subscribe(data => {
+        this.toastrService.success("student has joined the group");
         this.groups = this.getAllSubjectsWithStudents();
       }, error => {
         this.groupService.removeFromGroup(this.tokenStorageService.getUser().id, groupId).subscribe(data => {
+          this.toastrService.success("student has been removed from the group")
           this.groups = this.getAllSubjectsWithStudents();
         }, error => {
-          console.log(error);
+          this.toastrService.error(error.message)
         });
       });
     }
@@ -70,25 +75,29 @@ export class SubjectCardComponent implements OnInit {
   createGroup() {
     if (this.tokenStorageService.getUser().roles === "STUDENT") {
       this.groupService.createGroup(this.subject.id, this.tokenStorageService.getUser().id).subscribe(data => {
-        console.log(data);
+        this.toastrService.success("student has created a group");
         this.groups = this.getAllSubjectsWithStudents();
       }, error => {
-        console.log(error);
+        this.toastrService.error("student couldn't created a group");
       });
     }
   }
 
   acceptGroup(groupId: number | undefined) {
     this.groupService.acceptGroup(groupId).subscribe(data => {
-      console.log(data);
+      this.toastrService.success("group has been accepted");
       this.groups = this.getAllSubjectsWithStudents();
+    }, _ => {
+      this.toastrService.error("couldn't accept the group");
     })
   }
 
   refuseGroup(groupId: number | undefined) {
     this.groupService.refuseGroup(groupId).subscribe(data => {
-      console.log(data);
+      this.toastrService.success("group has been refused");
       this.groups = this.getAllSubjectsWithStudents();
+    },_ => {
+      this.toastrService.error("couldn't refuse the group");
     })
   }
 
@@ -108,6 +117,8 @@ export class SubjectCardComponent implements OnInit {
           groupsStudent.push(group)
         });
         this.groupsCompleted = groupsStudent;
+      },_ => {
+        this.toastrService.error("couldn't fetch all the groups by subjects");
       });
       return this.groupsCompleted;
     } else {
@@ -120,11 +131,15 @@ export class SubjectCardComponent implements OnInit {
             group.studentsObjects = [];
             this.studentService.getStudentById(studentId).subscribe(data =>{
               group.studentsObjects!.push(data)
+            }, _ => {
+              this.toastrService.error("couldn't fetch the student");
             })
           });
           groupsStudent.push(group)
         });
         this.groups = groupsStudent;
+      },_ => {
+        this.toastrService.error("couldn't fetch all the groups by subjects");
       });
       return this.groups;
     }

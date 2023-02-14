@@ -4,9 +4,9 @@ import {GroupService} from "../_services/group.service";
 import {Group} from "../models/group.model";
 import {Student} from "../models/student.model";
 import {StudentService} from "../_services/student.service";
-import {group} from "@angular/animations";
 import {RendezvousService} from "../_services/rendezvous.service";
 import {TokenStorageService} from "../_services/token-storage.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -20,14 +20,12 @@ export class GroupCardComponent implements OnInit {
   rendezvousList: any;
 
 
-  isSuccessful = false;
-
-
   constructor(private route : ActivatedRoute,
               private groupService : GroupService,
               private studentServie : StudentService,
               private rendezService : RendezvousService,
-              public tokenStorageService: TokenStorageService
+              public tokenStorageService: TokenStorageService,
+              private toastrService :ToastrService
               ) { }
 
   ngOnInit(): void {
@@ -44,35 +42,45 @@ export class GroupCardComponent implements OnInit {
         this.group.studentsObjects = [];
         this.studentServie.getStudentById(studentId).subscribe(data => {
           this.group.studentsObjects!.push(data);
+        }, _ => {
+          this.toastrService.error("couldn't fetch student");
         })
       });
+    }, _ => {
+      this.toastrService.error("couldn't fetch group");
     });
 
     this.rendezService.getAllRendezvousByGroupId(this.group.id).subscribe(data=>{
       this.rendezvousList = data;
+    }, _ => {
+      this.toastrService.error("couldn't fetch all rendezvous");
     })
   }
 
   sendDateRendezvous(rendezvous: HTMLInputElement, rendezbousId: number | undefined, groupId: number | undefined) {
-    console.log(rendezvous.value);
-    let date = new Date(rendezvous.value).toISOString();
-    console.log(date);
+    let date = '';
+    if(rendezvous.value) {
+      date = new Date(rendezvous.value).toISOString();
+    } else {
+      this.toastrService.error("error in date format");
+      return;
+    }
+
     this.rendezService.sendDateRendezvous(date, rendezbousId, groupId).subscribe(data => {
-      console.log(data);
-      this.isSuccessful = true;
+      this.toastrService.success("rendezvous has been updated");
       this.rendezService.getAllRendezvousByGroupId(this.group.id).subscribe(data=>{
         this.rendezvousList = data;
-      }, error => {
-        console.log(error);
+      }, _ => {
+        this.toastrService.success("couldn't fetch all rendezvous by group id");
       })
     })
   }
 
   onSubmitPublishUrl(groupId: number | undefined) {
     this.groupService.publishDriveUrl(groupId).subscribe(data => {
-      console.log(data);
-    }, error => {
-      console.log(error);
+      this.toastrService.success("drive URL has been published");
+    }, _ => {
+      this.toastrService.error("drive URL couldn't be published");
     })
   }
 }

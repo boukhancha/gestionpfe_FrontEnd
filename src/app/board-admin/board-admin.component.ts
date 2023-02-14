@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
 import {SubjectService} from "../_services/subject.service";
 import {TokenStorageService} from "../_services/token-storage.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-board-admin',
@@ -12,30 +12,28 @@ export class BoardAdminComponent implements OnInit {
   content?: string;
 
   constructor(private subjectService : SubjectService,
-              private tokenService : TokenStorageService
+              private tokenService : TokenStorageService,
+              private toastrService :ToastrService
               ) { }
-
-  ngOnInit(): void {
-
-  }
-
-  isSuccessful = false;
 
   form: any = {
     subject: null,
     description: null,
     groupNumber: null
   };
+  isSuccessful: boolean = false;
+
+  ngOnInit(): void {
+  }
 
   onSubmit():void{
     console.log(this.form)
     const {subject, description , groupNumber} = this.form;
+    this.isSuccessful = true;
     this.subjectService.createSubject(this.tokenService.getUser().id , subject, description,groupNumber).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
+      _ => {
+        this.toastrService.success("the subject has been created");
       }
     );
-
   }
 }

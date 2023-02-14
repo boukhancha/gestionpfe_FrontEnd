@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import {BranchService} from "../_services/branch.service";
 import {Observable} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,9 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
   branches: any[] = [];
 
-  constructor(private authService: AuthService, private branchService: BranchService) { }
+  constructor(private authService: AuthService,
+              private branchService: BranchService,
+              private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.branchService.getAllBranches().subscribe(data => {
@@ -33,6 +36,8 @@ export class RegisterComponent implements OnInit {
           name: branch.name
         });
       })
+    }, _ => {
+      this.toastrService.error("couldn't fetch all branches")
     })
   }
 
@@ -41,11 +46,12 @@ export class RegisterComponent implements OnInit {
     console.log(this.form);
     this.authService.registerStudent(firstName, lastName, email, password, codeApogee, branchId).subscribe(
       data => {
-        console.log(data);
+        this.toastrService.success("student has been registered")
         this.isSuccessful = true;
         this.isSignUpFailed = false;
       },
       err => {
+        this.toastrService.success("student couldn't be registered registered")
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }

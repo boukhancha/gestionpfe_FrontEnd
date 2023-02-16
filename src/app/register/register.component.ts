@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
         this.isSignUpFailed = false;
       },
       err => {
-        this.toastrService.success("student couldn't be registered registered")
+        this.toastrService.error("student couldn't be registered registered")
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }

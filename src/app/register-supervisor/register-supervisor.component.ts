@@ -103,7 +103,7 @@ export class RegisterSupervisorComponent implements OnInit {
         this.isSignUpFailed = false;
       },
       err => {
-        this.toastrService.error("supervisor couldn't be registered registered")
+        this.toastrService.error("supervisor couldn't be registered ")
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }

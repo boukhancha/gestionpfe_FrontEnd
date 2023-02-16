@@ -15,7 +15,6 @@ export class DomainAdminComponent implements OnInit {
   };
 
   domains: any = [];
-  isSuccessful: boolean = false;
 
   constructor( private domainService: DomainService,
                private toastrService :ToastrService) { }
@@ -33,8 +32,6 @@ export class DomainAdminComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.form)
-    this.isSuccessful = true;
     const {domain, role} = this.form;
     this.domainService.createDomain(domain, role).subscribe(
       _ => {

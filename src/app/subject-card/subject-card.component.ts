@@ -66,7 +66,7 @@ export class SubjectCardComponent implements OnInit {
           this.toastrService.success("student has been removed from the group")
           this.groups = this.getAllSubjectsWithStudents();
         }, error => {
-          this.toastrService.error(error.message)
+          this.toastrService.error(error.error.message)
         });
       });
     }
@@ -78,7 +78,7 @@ export class SubjectCardComponent implements OnInit {
         this.toastrService.success("student has created a group");
         this.groups = this.getAllSubjectsWithStudents();
       }, error => {
-        this.toastrService.error("student couldn't created a group");
+        this.toastrService.error(error.error.message)
       });
     }
   }

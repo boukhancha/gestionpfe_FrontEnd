@@ -21,7 +21,7 @@
 
   <div class="form-group dropdown">
     <label for="role">Role</label>
-    <select class="custom-select" [(ngModel)]="form.role" (change)="roleChanged($event)">
+    <select class="custom-select" [(ngModel)]="form.role" (change)="roleChanged($event)" [ngModelOptions]="{standalone: true}">
       <option value="STUDENT" >Student</option>
       <option value="SUPERVISOR" >Supervisor</option>
     </select>
@@ -31,11 +31,7 @@
     <button class="btn btn-primary btn-block">Submit</button>
   </div>
 
-</form
-  >
-<div class="alert alert-success" *ngIf="isSuccessful">
-  Your registration is successful!
-</div>
+</form>
 
 <div class="container">
   <div class="card m-5 p-3">
